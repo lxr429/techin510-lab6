@@ -10,8 +10,8 @@ from dotenv import load_dotenv
 load_dotenv()
 
 st.set_page_config(
-    page_title="Chat with the PDF",
-    page_icon="🦙",
+    page_title="Get Feedback for Your Resume",
+    page_icon="🐲",
     layout="centered",
     initial_sidebar_state="auto",
     menu_items=None,
@@ -35,7 +35,7 @@ if uploaded_file:
             llm = OpenAI(
                 model="gpt-3.5-turbo",
                 temperature=0.0,
-                system_prompt="You are an expert on the content of the document, provide detailed answers to the questions. Use the document to support your answers.",
+                system_prompt="You are an excellent hiring recruiter for the resume, provide detailed advice and feedback for the resume. Use the uploaded document to support your answers.",
             )
             index = VectorStoreIndex.from_documents(docs)
     os.remove(tmp.name)  # remove temp file
@@ -62,4 +62,5 @@ if st.session_state.messages[-1]["role"] != "assistant":
             st.write_stream(response.response_gen)
             message = {"role": "assistant", "content": response.response}
             st.session_state.messages.append(message)  # Add response to message history
+
 
